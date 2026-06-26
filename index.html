@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدللالي | المنصة السودانية الأولى</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --ink: #0d1117;
+            --gold: #f5a623;
+            --gold-dark: #d4891a;
+            --gold-light: #fef3dc;
+            --surface: #ffffff;
+            --surface-2: #f6f7f9;
+            --border: #e4e7ec;
+            --text: #111827;
+            --text-muted: #6b7280;
+            --green: #059669;
+            --red: #dc2626;
+            --blue: #2563eb;
+            --whatsapp: #25D366;
+            --radius: 12px;
+            --shadow: 0 1px 4px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.06);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Cairo', sans-serif; background: var(--surface-2); color: var(--text); line-height: 1.6; }
+
+        /* ─── Scrollbar ─── */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: var(--surface-2); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+        /* ─── Page system ─── */
+        .page { display: none; }
+        .page.active { display: block; }
+
+        /* ─── HEADER ─── */
+        header {
+            background: var(--ink);
+            position: sticky; top: 0; z-index: 100;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+        }
+        .header-top {
+            max-width: 1280px; margin: 0 auto;
+            display: flex; align-items: center; gap: 16px;
+            padding: 14px 20px; flex-wrap: wrap;
+        }
+        .logo-wrap {
+            display: flex; align-items: center; gap: 12px; cursor: pointer; flex-shrink: 0;
+        }
+        
+        .sudan-logo-svg {
+            width: 54px; height: 54px;
+            background: #fff; padding: 4px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            display: block;
+        }
+        
+        .logo {
+            font-size: 24px; font-weight: 900; color: #fff;
+            letter-spacing: -0.5px;
+        }
+        .logo em { color: var(--gold); font-style: normal; }
+        
+        .search-wrap {
+            flex: 1; min-width: 220px; max-width: 540px;
+            display: flex; background: #fff; border-radius: 8px; overflow: hidden;
+        }
+        .search-wrap input {
+            flex: 1; border: none; padding: 10px 14px; font-size: 14px;
+            font-family: 'Cairo', sans-serif; outline: none; color: var(--text);
+        }
+        .search-wrap select {
+            border: none; border-right: 1px solid var(--border);
+            padding: 0 10px; background: var(--surface-2);
+            font-family: 'Cairo', sans-serif; font-size: 13px;
+            outline: none; cursor: pointer; color: var(--text);
+        }
+        .search-wrap button {
+            background: var(--gold); border: none; padding: 0 18px;
+            font-weight: 700; color: var(--ink); cursor: pointer;
+            font-family: 'Cairo', sans-serif; font-size: 14px;
+            transition: background 0.2s;
+        }
+        .search-wrap button:hover { background: var(--gold-dark); }
+        .header-actions { display: flex; gap: 10px; align-items: center; margin-right: auto; }
+        .btn-auth {
+            background: rgba(255,255,255,0.1); color: #fff;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 8px 16px; border-radius: 8px; cursor: pointer;
+            font-family: 'Cairo', sans-serif; font-size: 13px; font-weight: 600;
+            transition: background 0.2s;
+        }
+        .btn-auth:hover { background: rgba(255,255,255,0.2); }
+        .btn-add {
+            background: var(--gold); color: var(--ink);
+            border: none; padding: 9px 18px; border-radius: 8px;
+            cursor: pointer; font-family: 'Cairo', sans-serif;
+            font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 6px;
+            transition: background 0.2s, transform 0.15s;
+        }
+        .btn-add:hover { background: var(--gold-dark); transform: translateY(-1px); }
+        .btn-back {
+            background: rgba(255,255,255,0.1); color: #fff; border: none;
+            padding: 9px 16px; border-radius: 8px; cursor: pointer;
+            font-family: 'Cairo', sans-serif; font-size: 14px; font-weight: 600;
+            display: none; align-items: center; gap: 6px; transition: background 0.2s;
+        }
+        .btn-back:hover { background: rgba(255,255,255,0.2); }
+        .btn-back.show { display: flex; }
+
+        /* ─── CATEGORIES NAV ─── */
+        .cats-nav {
+            background: var(--surface); border-bottom: 1px solid var(--border);
+            overflow-x: auto; white-space: nowrap;
+            scrollbar-width: none;
+        }
+        .cats-nav::-webkit-scrollbar { display: none; }
+        .cats-inner {
+            max-width: 1280px; margin: 0 auto;
+            display: flex; gap: 8px; padding: 12px 20px;
+        }
+        .cat-btn {
+            background: var(--surface-2); border: 1px solid var(--border);
+            padding: 7px 16px; border-radius: 20px; cursor: pointer;
+            font-family: 'Cairo', sans-serif; font-size: 13px; font-weight: 600;
+            color: var(--text-muted); transition: all 0.2s; white-space: nowrap;
+        }
+        .cat-btn:hover { border-color: var(--gold); color: var(--gold-dark); }
+        .cat-btn.active {
+            background: var(--ink); color: var(--gold);
+            border-color: var(--ink); font-weight: 700;
+        }
+
+        /* ─── HOME PAGE ─── */
+        .main-wrap { max-width: 1280px; margin: 0 auto; padding: 28px 20px; }
+
+        /* ─── HERO STATS BAR ─── */
+        .stats-bar {
+            display: flex; gap: 16px; margin-bottom: 28px; flex-wrap: wrap;
+        }
+        .stat-pill {
+            background: var(--surface); border: 1px solid var(--border);
+            padding: 12px 20px; border-radius: var(--radius);
+            display: flex; align-items: center; gap: 10px; flex: 1; min-width: 140px;
+        }
+        .stat-icon { font-size: 22px; }
+        .stat-num { font-size: 22px; font-weight: 900; color: var(--ink); }
+        .stat-label { font-size: 12px; color: var(--text-muted); font-weight: 600; }
+
+        /* ─── SECTION HEADER ─── */
+        .section-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 18px;
+        }
+        .section-header h2 { font-size: 18px; font-weight: 800; color: var(--ink); }
+        .section-header span { font-size: 13px; color: var(--text-muted); }
+
+        /* ─── ADS GRID ─── */
+        .ads-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 18px;
+        }
+        .ad-card {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--radius); overflow: hidden; cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+        }
+        .ad-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+        .ad-thumb {
+            width: 100%; height: 190px; object-fit: cover;
+            background: var(--surface-2); display: flex;
+            align-items: center; justify-content: center;
+            color: var(--border); font-size: 48px;
+            background-size: cover; background-position: center;
+        }
+        .ad-badge {
+            position: absolute; top: 12px; right: 12px;
+            background: var(--gold); color: var(--ink);
+            font-size: 11px; font-weight: 800; padding: 3px 8px;
+            border-radius: 4px;
+        }
+        .ad-body { padding: 14px; }
+        .ad-category { font-size: 11px; color: var(--gold-dark); font-weight: 700; margin-bottom: 4px; }
+        .ad-title {
+            font-size: 15px; font-weight: 700; color: var(--text);
+            margin-bottom: 8px; line-height: 1.4;
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+            height: 42px;
+        }
+        .ad-price { font-size: 18px; font-weight: 900; color: var(--green); margin-bottom: 10px; }
+        .ad-foot {
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 12px; color: var(--text-muted);
+            border-top: 1px solid var(--border); padding-top: 10px;
+        }
+        .ad-foot-loc { display: flex; align-items: center; gap: 4px; font-weight: 600; color: var(--ink); }
+        .empty-state {
+            grid-column: 1/-1; text-align: center; padding: 60px 20px;
+            color: var(--text-muted);
+        }
+        .empty-state i { font-size: 48px; margin-bottom: 12px; color: var(--border); }
+        .empty-state p { font-size: 15px; margin-top: 8px; }
+
+        /* ─── DETAILS PAGE ─── */
+        .details-wrap {
+            max-width: 1280px; margin: 0 auto; padding: 28px 20px;
+            display: grid; grid-template-columns: 1fr 360px; gap: 28px;
+        }
+        @media (max-width: 900px) { .details-wrap { grid-template-columns: 1fr; } }
+
+        .gallery-main {
+            border-radius: var(--radius); overflow: hidden;
+            aspect-ratio: 16/9; background: var(--surface-2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 56px; color: var(--border);
+            background-size: contain; background-repeat: no-repeat;
+            background-position: center; border: 1px solid var(--border);
+            transition: background-image 0.2s;
+        }
+        .gallery-thumbs {
+            display: flex; gap: 8px; margin-top: 10px; overflow-x: auto; padding-bottom: 4px;
+        }
+        .gallery-thumbs img {
+            width: 72px; height: 72px; object-fit: cover;
+            border-radius: 8px; border: 2px solid transparent;
+            cursor: pointer; flex-shrink: 0; transition: border-color 0.2s;
+        }
+        .gallery-thumbs img.active { border-color: var(--gold); }
+
+        .panel {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 22px; margin-bottom: 20px;
+        }
+        .det-title { font-size: 22px; font-weight: 900; margin-bottom: 8px; }
+        .det-price { font-size: 28px; font-weight: 900; color: var(--green); margin-bottom: 16px; }
+        .det-meta {
+            display: flex; flex-wrap: wrap; gap: 16px;
+            font-size: 13px; color: var(--text-muted);
+            border-bottom: 1px solid var(--border); padding-bottom: 14px; margin-bottom: 16px;
+        }
+        .det-meta span { display: flex; align-items: center; gap: 5px; }
+        .det-meta b { color: var(--text); }
+        .det-desc { font-size: 15px; color: #374151; white-space: pre-line; line-height: 1.8; }
+
+        /* sidebar */
+        .sidebar-sticky { position: sticky; top: 88px; }
+        .seller-card { text-align: center; }
+        .seller-avatar {
+            width: 64px; height: 64px; border-radius: 50%;
+            background: var(--gold-light); color: var(--gold-dark);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 28px; font-weight: 900; margin: 0 auto 10px;
+        }
+        .seller-name { font-size: 18px; font-weight: 800; margin-bottom: 2px; }
+        .seller-badge {
+            font-size: 12px; color: var(--green); font-weight: 700;
+            margin-bottom: 18px; display: flex; align-items: center; justify-content: center; gap: 4px;
+        }
+        .btn-contact {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            width: 100%; padding: 13px; border-radius: 10px; font-weight: 800;
+            font-family: 'Cairo', sans-serif; color: #fff; margin-bottom: 10px;
+            font-size: 15px; border: none; cursor: pointer;
+            transition: opacity 0.2s, transform 0.15s;
+        }
+        .btn-contact:hover { opacity: 0.9; transform: translateY(-1px); }
+        .btn-wa { background: var(--whatsapp); }
+        .btn-call { background: var(--blue); }
+
+        /* Comments */
+        .comments-title {
+            font-size: 16px; font-weight: 800; margin-bottom: 16px;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .comment-form form { display: block; }
+        .comment-form input, .comment-form textarea {
+            width: 100%; border: 1px solid var(--border);
+            padding: 10px 14px; border-radius: 8px; font-family: 'Cairo', sans-serif;
+            font-size: 14px; outline: none; margin-bottom: 10px;
+            transition: border-color 0.2s;
+        }
+        .comment-form input:focus, .comment-form textarea:focus { border-color: var(--gold); }
+        .btn-submit-comment {
+            background: var(--ink); color: #fff; border: none;
+            padding: 10px 22px; border-radius: 8px; cursor: pointer;
+            font-family: 'Cairo', sans-serif; font-weight: 700; font-size: 14px;
+            transition: background 0.2s;
+        }
+        .btn-submit-comment:hover { background: #1f2937; }
+        .comment-item {
+            background: var(--surface-2); padding: 14px; border-radius: 10px;
+            border: 1px solid var(--border); margin-top: 12px;
+        }
+        .comment-head {
+            display: flex; justify-content: space-between;
+            font-size: 13px; margin-bottom: 6px;
+        }
+        .comment-user { font-weight: 800; color: var(--ink); }
+        .comment-date { color: var(--text-muted); }
+        .comment-text { font-size: 14px; color: #374151; }
+        .no-comments { text-align: center; color: var(--text-muted); font-size: 14px; padding: 20px 0; }
+
+        /* ─── ADD PAGE ─── */
+        .form-wrap {
+            max-width: 780px; margin: 36px auto; padding: 0 20px;
+        }
+        .form-card {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 32px; box-shadow: var(--shadow);
+        }
+        .form-card h2 {
+            font-size: 20px; font-weight: 900; margin-bottom: 24px;
+            padding-bottom: 14px; border-bottom: 3px solid var(--gold);
+        }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+        @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
+        .form-group { margin-bottom: 0; }
+        .form-group.full { grid-column: 1 / -1; }
+        .form-group label {
+            display: block; font-weight: 700; font-size: 14px;
+            margin-bottom: 7px; color: var(--text);
+        }
+        .form-group label span { color: var(--red); }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; border: 1px solid var(--border);
+            padding: 11px 14px; border-radius: 8px;
+            font-family: 'Cairo', sans-serif; font-size: 14px;
+            outline: none; transition: border-color 0.2s; color: var(--text);
+            background: var(--surface);
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245,166,35,0.12);
+        }
+        .price-row { display: flex; align-items: center; gap: 0; }
+        .price-suffix {
+            background: var(--surface-2); border: 1px solid var(--border); border-right: none;
+            padding: 11px 14px; border-radius: 8px 0 0 8px;
+            font-size: 13px; font-weight: 700; color: var(--green); white-space: nowrap;
+        }
+        .price-row input { border-radius: 0 8px 8px 0; }
+
+        /* ─── FEE AGREEMENT SECTION ─── */
+        .fee-agreement-box {
+            grid-column: 1 / -1;
+            background: #fffdf5;
+            border: 1px dashed var(--gold);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 10px 0;
+        }
+        .fee-agreement-box .quran-verse {
+            text-align: center;
+            font-weight: 700;
+            color: var(--gold-dark);
+            font-size: 14px;
+            margin-bottom: 14px;
+            line-height: 1.6;
+            background: var(--gold-light);
+            padding: 10px;
+            border-radius: 6px;
+        }
+        .fee-agreement-box ul {
+            list-style: none;
+            padding-right: 5px;
+        }
+        .fee-agreement-box li {
+            font-size: 13.5px;
+            color: var(--text);
+            margin-bottom: 8px;
+            position: relative;
+            padding-right: 18px;
+        }
+        .fee-agreement-box li::before {
+            content: "•";
+            color: var(--gold-dark);
+            font-weight: bold;
+            font-size: 18px;
+            position: absolute;
+            right: 0;
+            top: -2px;
+        }
+        .fee-agreement-box .fee-note {
+            font-size: 12px;
+            color: var(--red);
+            font-weight: 700;
+            margin-top: 12px;
+            border-top: 1px solid #f5e4bc;
+            padding-top: 10px;
+        }
+        .checkbox-row {
+            grid-column: 1 / -1;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-top: 5px;
+            background: var(--surface-2);
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+        .checkbox-row input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--gold);
+            cursor: pointer;
+            margin-top: 3px;
+        }
+        .checkbox-row label {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--ink);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        /* Bank Account Cards */
+        .bank-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 18px;
+            margin-top: 14px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            position: relative;
+        }
+        .bank-icon {
+            width: 52px; height: 52px;
+            background: var(--gold-light);
+            color: var(--gold-dark);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px;
+        }
+        .bank-info h4 { font-size: 15px; font-weight: 800; color: var(--ink); }
+        .bank-info p { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+        .bank-info strong { color: var(--green); font-size: 15px; letter-spacing: 0.5px; }
+        .bank-call-btn {
+            position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+            background: var(--blue); color: #fff; border: none; width: 36px; height: 36px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; text-decoration: none;
+        }
+
+        /* Upload */
+        .upload-zone {
+            border: 2px dashed var(--border); border-radius: 10px;
+            padding: 28px; text-align: center; cursor: pointer; background: var(--surface-2);
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .upload-zone:hover { border-color: var(--gold); background: var(--gold-light); }
+        .upload-zone i { font-size: 32px; color: var(--text-muted); margin-bottom: 8px; display: block; }
+        .upload-zone p { font-size: 14px; color: var(--text-muted); }
+        .upload-zone small { font-size: 12px; color: #9ca3af; }
+        .previews { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+        .preview-item { position: relative; width: 88px; height: 88px; }
+        .preview-item img {
+            width: 100%; height: 100%; object-fit: cover;
+            border-radius: 8px; border: 1px solid var(--border);
+        }
+        .preview-del {
+            position: absolute; top: -6px; left: -6px;
+            background: var(--red); color: #fff; border: none;
+            border-radius: 50%; width: 22px; height: 22px;
+            font-size: 11px; cursor: pointer; display: flex;
+            align-items: center; justify-content: center; font-weight: 900;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .btn-publish {
+            grid-column: 1/-1; width: 100%; background: var(--gold); color: var(--ink);
+            border: none; padding: 15px; border-radius: 10px; font-size: 17px;
+            font-weight: 900; cursor: pointer; font-family: 'Cairo', sans-serif;
+            transition: background 0.2s, transform 0.15s; margin-top: 8px;
+        }
+        .btn-publish:hover { background: var(--gold-dark); transform: translateY(-2px); }
+
+        /* ─── AUTH MODAL ─── */
+        .modal-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.6); z-index: 500;
+            align-items: center; justify-content: center; padding: 20px;
+        }
+        .modal-overlay.open { display: flex; }
+        .modal {
+            background: var(--surface); border-radius: 16px; padding: 32px;
+            width: 100%; max-width: 420px; position: relative;
+            box-shadow: var(--shadow-lg);
+        }
+        .modal-close {
+            position: absolute; top: 14px; left: 14px;
+            background: var(--surface-2); border: none; border-radius: 50%;
+            width: 30px; height: 30px; cursor: pointer; font-size: 14px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .modal h3 { font-size: 20px; font-weight: 900; margin-bottom: 20px; text-align: center; }
+        .modal-tabs {
+            display: flex; background: var(--surface-2); border-radius: 8px;
+            padding: 4px; margin-bottom: 20px;
+        }
+        .modal-tab {
+            flex: 1; padding: 8px; text-align: center; border-radius: 6px;
+            cursor: pointer; font-weight: 700; font-size: 14px; color: var(--text-muted);
+            transition: all 0.2s;
+        }
+        .modal-tab.active { background: var(--surface); color: var(--ink); box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+        .modal-body input {
+            width: 100%; border: 1px solid var(--border); padding: 11px 14px;
+            border-radius: 8px; font-family: 'Cairo', sans-serif; font-size: 14px;
+            outline: none; margin-bottom: 12px; transition: border-color 0.2s;
+        }
+        .modal-body input:focus { border-color: var(--gold); }
+        .btn-modal-submit {
+            width: 100%; background: var(--ink); color: #fff; border: none;
+            padding: 13px; border-radius: 10px; font-size: 16px; font-weight: 800;
+            cursor: pointer; font-family: 'Cairo', sans-serif; transition: background 0.2s;
+        }
+        .btn-modal-submit:hover { background: #1f2937; }
+
+        /* ─── ADMIN PAGE ─── */
+        .admin-wrap { max-width: 1100px; margin: 0 auto; padding: 28px 20px; }
+        .admin-wrap h2 { font-size: 20px; font-weight: 900; margin-bottom: 24px; }
+        .admin-stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin-bottom: 28px; }
+        .stat-card {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 20px; text-align: center;
+        }
+        .stat-card .num { font-size: 32px; font-weight: 900; color: var(--ink); }
+        .stat-card .lbl { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+        .admin-block {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 22px; margin-bottom: 24px;
+        }
+        .admin-block h3 { font-size: 16px; font-weight: 800; margin-bottom: 16px; color: var(--ink); }
+        table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        th, td { padding: 12px 14px; border-bottom: 1px solid var(--border); text-align: right; }
+        th { background: var(--surface-2); font-weight: 800; color: var(--ink); }
+        tr:last-child td { border-bottom: none; }
+        .btn-del {
+            background: var(--red); color: #fff; border: none;
+            padding: 6px 12px; border-radius: 6px; cursor: pointer;
+            font-family: 'Cairo', sans-serif; font-size: 12px; font-weight: 700;
+            transition: opacity 0.2s;
+        }
+        .btn-del:hover { opacity: 0.85; }
+        
+        .btn-approve {
+            background: var(--green); color: #fff; border: none;
+            padding: 6px 12px; border-radius: 6px; cursor: pointer;
+            font-family: 'Cairo', sans-serif; font-size: 12px; font-weight: 700;
+            transition: opacity 0.2s; margin-left: 5px;
+        }
+        .btn-approve:hover { opacity: 0.85; }
+
+        .admin-comment-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px; background: var(--surface-2); border-radius: 8px;
+            border: 1px solid var(--border); margin-bottom: 10px;
+        }
+        .admin-comment-row p { font-size: 13px; margin-top: 2px; }
+        .admin-comment-row small { font-size: 11px; color: var(--text-muted); }
+
+        /* ─── Toast ─── */
+        .toast {
+            position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
+            background: var(--ink); color: #fff; padding: 14px 24px;
+            border-radius: 10px; font-weight: 700; font-size: 14px; z-index: 999;
+            transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+            box-shadow: var(--shadow-lg); max-width: 90vw; text-align: center;
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); }
+        .toast.success { background: var(--green); }
+        .toast.error { background: var(--red); }
+
+        /* ─── USER CHIP ─── */
+        .user-chip {
+            background: var(--gold); color: var(--ink);
+            padding: 7px 14px; border-radius: 20px;
+            font-weight: 800; font-size: 13px; cursor: pointer;
+            display: flex; align-items: center; gap: 6px;
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            background: var(--ink); color: rgba(255,255,255,0.6);
+            padding: 24px 20px; text-align: center; font-size: 13px;
+            border-top: 3px solid var(--gold); margin-top: 40px;
+        }
+        footer strong { color: var(--gold); }
+        .footer-links { margin-top: 8px; display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+        .footer-links span { cursor: pointer; transition: color 0.2s; }
+        .footer-links span:hover { color: var(--gold); }
+        .admin-link { color: rgba(255,255,255,0.35); font-size: 11px; width: 100%; margin-top: 10px; }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 768px) {
+            .header-top { padding: 10px 14px; gap: 10px; }
+            .logo { font-size: 20px; }
+            .sudan-logo-svg { width: 44px; height: 44px; padding: 3px; }
+            .ads-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+            .ad-thumb { height: 140px; }
+            .stats-bar { gap: 10px; }
+            .stat-pill { padding: 10px 14px; min-width: 110px; }
+            .stat-num { font-size: 18px; }
+            .main-wrap { padding: 18px 14px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-top">
+        <div class="logo-wrap" onclick="goHome()">
+            <svg class="sudan-logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="46" fill="#f8fafc"/>
+                <g transform="translate(0, -2)">
+                    <path d="M 82,50 L 52,25 L 52,75 Z" fill="#007229" stroke="#007229" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M 52,25 L 18,25 L 18,41 L 42,41 Z" fill="#D21034"/>
+                    <path d="M 52,41 L 18,41 L 18,59 L 52,59 Z" fill="#FFFFFF"/>
+                    <path d="M 52,59 L 18,59 L 18,75 L 42,75 Z" fill="#000000"/>
+                </g>
+                <circle cx="50" cy="50" r="42" fill="none" stroke="#f5a623" stroke-width="4" stroke-dasharray="12 6"/>
+                <polygon points="50,14 53,21 61,21 55,26 57,33 50,29 43,33 45,26 39,21 47,21" fill="#f5a623"/>
+            </svg>
+            <div class="logo">منصة <em>الدللالي</em></div>
+        </div>
+        
+        <div class="search-wrap" id="hdr-search">
+            <input type="text" id="q-input" placeholder="ابحث: سيارة، شقة، جهاز..." oninput="filterAds()">
+            <select id="q-city" onchange="filterAds()">
+                <option value="">كل السودان</option>
+                <option>الخرطوم</option>
+                <option>بورتسودان</option>
+                <option>أم درمان</option>
+                <option>ود مدني</option>
+                <option>عطبرة</option>
+                <option>كسلا</option>
+                <option>الأبيض</option>
+            </select>
+            <button onclick="filterAds()"><i class="fa fa-search"></i> بحث</button>
+        </div>
+        <div class="header-actions">
+            <div id="user-area">
+                <button class="btn-auth" onclick="openModal()"><i class="fa fa-user"></i> دخول / تسجيل</button>
+            </div>
+            <button class="btn-add" id="btn-add" onclick="goAdd()"><i class="fa fa-plus"></i> أضف إعلان</button>
+            <button class="btn-back" id="btn-back" onclick="goHome()"><i class="fa fa-arrow-right"></i> الرئيسية</button>
+        </div>
+    </div>
+</header>
+
+<div class="cats-nav" id="cats-nav">
+    <div class="cats-inner" id="cats-inner">
+        <button class="cat-btn active" onclick="selectCat(this,'الكل')">🏠 الكل</button>
+        <button class="cat-btn" onclick="selectCat(this,'🚗 السيارات')">🚗 السيارات</button>
+        <button class="cat-btn" onclick="selectCat(this,'🏢 عقارات وأراضي')">🏢 عقارات وأراضي</button>
+        <button class="cat-btn" onclick="selectCat(this,'📱 أجهزة وهواتف')">📱 أجهزة وهواتف</button>
+        <button class="cat-btn" onclick="selectCat(this,'🐏 مواشي وحيوانات')">🐏 مواشي وحيوانات</button>
+        <button class="cat-btn" onclick="selectCat(this,'🛋️ أثاث ومنزليات')">🛋️ أثاث ومنزليات</button>
+        <button class="cat-btn" onclick="selectCat(this,'💼 وظائف وأعمال')">💼 وظائف وأعمال</button>
+    </div>
+</div>
+
+<div class="page active" id="pg-home">
+    <div class="main-wrap">
+        <div class="stats-bar" id="stats-bar">
+            <div class="stat-pill"><span class="stat-icon">📢</span><div><div class="stat-num" id="s-ads">0</div><div class="stat-label">إعلان نشط</div></div></div>
+            <div class="stat-pill"><span class="stat-icon">💬</span><div><div class="stat-num" id="s-comments">0</div><div class="stat-label">رد وسومة</div></div></div>
+            <div class="stat-pill"><span class="stat-icon">🏙️</span><div><div class="stat-num">8</div><div class="stat-label">مدينة سودانية</div></div></div>
+        </div>
+        <div class="section-header">
+            <h2 id="section-label">أحدث الإعلانات</h2>
+            <span id="ads-count-label"></span>
+        </div>
+        <div class="ads-grid" id="ads-grid"></div>
+    </div>
+</div>
+
+<div class="page" id="pg-details">
+    <div class="details-wrap">
+        <div>
+            <div class="gallery-main" id="det-gallery"></div>
+            <div class="gallery-thumbs" id="det-thumbs"></div>
+
+            <div class="panel" style="margin-top:20px">
+                <div class="ad-category" id="det-cat"></div>
+                <h1 class="det-title" id="det-title"></h1>
+                <div class="det-price" id="det-price"></div>
+                <div class="det-meta" id="det-meta"></div>
+                <div class="det-desc" id="det-desc"></div>
+            </div>
+
+            <div class="panel">
+                <div class="comments-title">
+                    <span>💬 الردود والسومات</span>
+                    <span id="cmts-count" style="color:var(--text-muted);font-size:13px;font-weight:600"></span>
+                </div>
+                <div class="comment-form">
+                    <form onsubmit="submitComment(event)">
+                        <input type="text" id="cmt-name" placeholder="اسمك الكريم" required>
+                        <textarea id="cmt-text" rows="3" placeholder="اكتب سومتك أو استفسارك..." required></textarea>
+                        <button type="submit" class="btn-submit-comment">إرسال الرد</button>
+                    </form>
+                </div>
+                <div id="cmts-list"></div>
+            </div>
+        </div>
+
+        <div>
+            <div class="sidebar-sticky">
+                <div class="panel seller-card">
+                    <div class="seller-avatar" id="det-avatar"></div>
+                    <div class="seller-name" id="det-author"></div>
+                    <div class="seller-badge"><i class="fa fa-circle-check"></i> عضو موثق</div>
+                    <button class="btn-contact btn-wa" id="btn-wa"><i class="fab fa-whatsapp fa-lg"></i> تواصل عبر واتساب</button>
+                    <button class="btn-contact btn-call" id="btn-call"><i class="fa fa-phone fa-lg"></i> اتصال مباشر</button>
+                </div>
+
+                <div class="panel" style="text-align:center; background:var(--gold-light); border-color:#f5d89a;">
+                    <div style="font-size:13px; color:#92600a; font-weight:700;">⚠️ تنبيه أمان</div>
+                    <div style="font-size:12px; color:#78540d; margin-top:6px; line-height:1.7;">لا تحوّل أموالاً قبل استلام السلعة. تحقق من البائع شخصياً.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page" id="pg-add">
+    <div class="form-wrap">
+        <div class="form-card">
+            <h2>➕ نشر إعلان جديد</h2>
+            <form onsubmit="publishAd(event)" id="add-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>اسم المعلن <span>*</span></label>
+                        <input type="text" id="n-author" placeholder="خالد محمد" required>
+                    </div>
+                    <div class="form-group">
+                        <label>القسم <span>*</span></label>
+                        <select id="n-cat" required>
+                            <option value="">-- اختر القسم --</option>
+                            <option>🚗 السيارات</option>
+                            <option>🏢 عقارات وأراضي</option>
+                            <option>📱 أجهزة وهواتف</option>
+                            <option>🐏 مواشي وحيوانات</option>
+                            <option>🛋️ أثاث ومنزليات</option>
+                            <option>💼 وظائف وأعمال</option>
+                        </select>
+                    </div>
+                    <div class="form-group full">
+                        <label>عنوان الإعلان <span>*</span></label>
+                        <input type="text" id="n-title" placeholder="مثال: لاندكروزر V8 2022 فل كامل" required>
+                    </div>
+                    <div class="form-group">
+                        <label>المدينة <span>*</span></label>
+                        <select id="n-city" required>
+                            <option value="">-- اختر المدينة --</option>
+                            <option>الخرطوم</option>
+                            <option>بورتسودان</option>
+                            <option>أم درمان</option>
+                            <option>ود مدني</option>
+                            <option>عطبرة</option>
+                            <option>كسلا</option>
+                            <option>الأبيض</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>السعر (ج.س) <span>*</span></label>
+                        <div class="price-row">
+                            <span class="price-suffix">ج.س</span>
+                            <input type="number" id="n-price" placeholder="45000000" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>رقم الهاتف <span>*</span></label>
+                        <input type="tel" id="n-phone" placeholder="0912345678" required>
+                    </div>
+                    <div class="form-group">
+                        <label>رقم الواتساب <span>*</span></label>
+                        <input type="tel" id="n-wa" placeholder="0912345678" required>
+                    </div>
+                    <div class="form-group full">
+                        <label>تفاصيل الإعلان <span>*</span></label>
+                        <textarea id="n-desc" rows="5" placeholder="اكتب حالة السلعة والمواصفات الكاملة..." required></textarea>
+                    </div>
+                    <div class="form-group full">
+                        <label>صور السلعة (حتى 5 صور)</label>
+                        <div class="upload-zone" onclick="document.getElementById('n-imgs').click()">
+                            <i class="fa fa-camera"></i>
+                            <p>اضغط لإضافة صور من الجهاز</p>
+                            <small>PNG, JPG – حجم مناسب</small>
+                            <input type="file" id="n-imgs" accept="image/*" multiple style="display:none" onchange="previewImgs(event)">
+                        </div>
+                        <div class="previews" id="n-previews"></div>
+                    </div>
+
+                    <div class="fee-agreement-box">
+                        <div class="quran-verse">
+                            قال الله تعالى: "وَأَوْفُواْ بِعَهْدِ اللهِ إِذَا عَاهَدتُّمْ وَلاَ تَنقُضُواْ الأَيْمَانَ بَعْدَ تَوْكِيدِهَا وَقَدْ جَعَلْتُمُ اللهَ عَلَيْكُمْ كَفِيلاً"
+                        </div>
+                        <ul>
+                            <li>أتعهد وأقسم بالله أنا المعلن أن أدفع رسوم الموقع وهي 1% من قيمة البيع سواء تم البيع عن طريق الموقع أو بسببه.</li>
+                            <li>أتعهد بدفع الرسوم خلال 10 أيام من استلام كامل مبلغ المبايعة.</li>
+                        </ul>
+                        <div class="fee-note">
+                            💡 ملاحظة بشأن الرسوم: رسوم الموقع هي على المعلن ولا تبرأ ذمة المعلن من الرسوم إلا في حال دفعها.
+                        </div>
+                    </div>
+
+                    <div class="checkbox-row">
+                        <input type="checkbox" id="n-agree-fee" required>
+                        <label for="n-agree-fee">أقسم بالله العظيم وأتعهد بالالتزام التام باتفاقية الرسوم المذكورة أعلاه <span>*</span></label>
+                    </div>
+
+                    <button type="submit" class="btn-publish">🚀 انشر إعلانك الآن مجاناً</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="page" id="pg-fee-report">
+    <div class="form-wrap">
+        <div class="panel" style="background:#fffdf5; border:1px solid #f5d89a;">
+            <h2 style="font-weight:900; margin-bottom:12px; color:var(--ink);"><i class="fa fa-wallet" style="color:var(--gold-dark)"></i> حسابات دفع رسوم المنصة (1%)</h2>
+            <p style="font-size:14px; color:#4b5563;">بعد إتمام البيع، يرجى تحويل نسبة 1% من قيمة المبايعة الكلية على أحد الحسابات التالية لإبراء ذمتك:</p>
+            
+            <div class="bank-card">
+                <div class="bank-icon"><i class="fa fa-university"></i></div>
+                <div class="bank-info">
+                    <h4>بنك الخرطوم (تطبيق بنكك)</h4>
+                    <p>اسم الحساب: <b>صلاح الحسوبابي</b></p>
+                    <p>رقم الحساب الحركي: <strong>3481699</strong></p>
+                </div>
+            </div>
+
+            <div class="bank-card">
+                <div class="bank-icon"><i class="fa fa-mobile-screen-button"></i></div>
+                <div class="bank-info">
+                    <h4>محفظة كاش (أم درمان / بورتسودان)</h4>
+                    <p>اسم المستفيد: <b>صلاح الحسوبابي</b></p>
+                    <p>رقم الهاتف: <strong>0912255983</strong></p>
+                </div>
+                <a href="tel:0912255983" class="bank-call-btn"><i class="fa fa-phone"></i></a>
+            </div>
+        </div>
+
+        <div class="form-card" style="margin-top:24px;">
+            <h2>📝 نموذج إشعار سداد الرسوم</h2>
+            <p style="font-size:13px; color:var(--text-muted); margin-bottom:20px;">يرجى ملء النموذج أدناه بعد التحويل لتأكيد عملية الدفع وتوثيقها من قِبل المشرفين.</p>
+            <form onsubmit="submitFeeReport(event)">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>اسم المحوّل الكامل <span>*</span></label>
+                        <input type="text" id="r-name" placeholder="محمد أحمد علي" required>
+                    </div>
+                    <div class="form-group">
+                        <label>رقم الهاتف للتواصل <span>*</span></label>
+                        <input type="tel" id="r-phone" placeholder="0912345678" required>
+                    </div>
+                    <div class="form-group">
+                        <label>رقم الإعلان أو عنوان السلعة <span>*</span></label>
+                        <input type="text" id="r-ad" placeholder="مثال: لاندكروزر 2022" required>
+                    </div>
+                    <div class="form-group">
+                        <label>المبلغ الذي تم تحويله (ج.س) <span>*</span></label>
+                        <input type="number" id="r-amount" placeholder="450000" required>
+                    </div>
+                    <div class="form-group full">
+                        <label>صورة إشعار التحويل / لقطة الشاشة (Screenshot) <span>*</span></label>
+                        <div class="upload-zone" onclick="document.getElementById('r-screenshot').click()">
+                            <i class="fa fa-file-image"></i>
+                            <p>اضغط لإرفاق صورة الإشعار</p>
+                            <input type="file" id="r-screenshot" accept="image/*" style="display:none" required onchange="previewScreenshot(event)">
+                        </div>
+                        <div class="previews" id="r-preview-box"></div>
+                    </div>
+                    <button type="submit" class="btn-publish" style="background:var(--ink); color:#fff;">📤 إرسال الإشعار للإدارة</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="page" id="pg-admin">
+    <div class="admin-wrap">
+        <h2>⚙️ لوحة تحكم المشرفين</h2>
+        <div class="admin-stats">
+            <div class="stat-card"><div class="num" id="a-ads">0</div><div class="lbl">إعلان نشط</div></div>
+            <div class="stat-card"><div class="num" id="a-cmts">0</div><div class="lbl">رد وتعليق</div></div>
+            <div class="stat-card" style="border-color:var(--gold);"><div class="num" id="a-reports" style="color:var(--gold-dark)">0</div><div class="lbl">إشعارات سداد معلقة</div></div>
+        </div>
+
+        <div class="admin-block" style="border-top: 3px solid var(--gold);">
+            <h3>💰 مراجعة إشعارات سداد الرسوم (1%)</h3>
+            <div style="overflow-x:auto">
+                <table>
+                    <thead>
+                        <tr><th>المعلن</th><th>الهاتف</th><th>السلعة / الإعلان</th><th>المبلغ المحوّل</th><th>الإشعار</th><th>إجراء</th></tr>
+                    </thead>
+                    <tbody id="a-reports-body"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="admin-block">
+            <h3>📝 إدارة الإعلانات</h3>
+            <div style="overflow-x:auto">
+                <table>
+                    <thead>
+                        <tr><th>رقم</th><th>العنوان</th><th>القسم</th><th>المدينة</th><th>السعر</th><th>حذف</th></tr>
+                    </thead>
+                    <tbody id="a-ads-body"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="admin-block">
+            <h3>💬 مراقبة التعليقات</h3>
+            <div id="a-cmts-list"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="auth-modal">
+    <div class="modal">
+        <button class="modal-close" onclick="closeModal()"><i class="fa fa-times"></i></button>
+        <h3>👋 أهلاً بك في منصة الدللالي</h3>
+        <div class="modal-tabs">
+            <div class="modal-tab active" id="tab-login" onclick="switchTab('login')">تسجيل الدخول</div>
+            <div class="modal-tab" id="tab-reg" onclick="switchTab('reg')">حساب جديد</div>
+        </div>
+        <div class="modal-body" id="modal-body">
+            <input type="text" id="m-name" placeholder="اسمك الكريم" style="display:none">
+            <input type="text" id="m-user" placeholder="اسم المستخدم">
+            <input type="password" id="m-pass" placeholder="كلمة المرور">
+            <button class="btn-modal-submit" id="m-submit" onclick="handleAuth()">دخول</button>
+        </div>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<footer>
+    <p>© 2018 – 2026 <strong>منصة الدللالي</strong> | بواسطة <b>صلاح الحسوبابي</b></p>
+    <div class="footer-links">
+        <span onclick="goFeeReport()"><i class="fa fa-hand-holding-dollar"></i> دفع الرسوم وإبراء الذمة</span>
+        <span class="admin-link" onclick="enterAdmin()">🔐 لوحة المشرفين</span>
+    </div>
+</footer>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, onSnapshot, doc, deleteDoc, updateDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+// تهيئة التكوين
+const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
+};
+
+let db = null;
+let useCloud = false;
+
+// آلية ذكية لتفادي تعطل الموقع في حال غياب مفاتيح الـ Firebase (تخطي تلقائي)
+try {
+    if (firebaseConfig.apiKey && firebaseConfig.apiKey !== "YOUR_API_KEY") {
+        const app = initializeApp(firebaseConfig);
+        db = getFirestore(app);
+        useCloud = true;
+        console.log("Connected to Cloud Database successfully.");
+    }
+} catch (e) {
+    console.warn("Firebase config is invalid. Switching to Local Storage Fallback Mode.", e);
+}
+
+// الإعلانات الافتراضية
+const demoData = [
+    { id: "demo1", author: "أحمد عوض", cat: "🚗 السيارات", title: "تويوتا هيلوكس 2020 دبل قير ممتاز", city: "الخرطوم", phone: "0912345678", wa: "0912345678", price: 28000000, desc: "هيلوكس بوكس دبل وارد الخليج، ممشى قليل، تكييف ممتاز، ترخيص خالي صدمات.", ts: Date.now(), imgs: [], comments: [] },
+    { id: "demo2", author: "عثمان علي", cat: "🏢 عقارات وأراضي", title: "منزل طابقين للبيع حي الشاطئ", city: "بورتسودان", phone: "0922222222", wa: "0922222222", price: 95000000, desc: "بيت لقطة طابقين مجهز بالكامل، قريب من الخدمات والشارع الرئيسي، شهادة بحث هندسية جاهزة.", ts: Date.now() - 50000, imgs: [], comments: [] },
+    { id: "demo3", author: "منى محمد", cat: "📱 أجهزة وهواتف", title: "آيفون 15 برو ماكس 256 جيجا بايت", city: "أم درمان", phone: "0933333333", wa: "0933333333", price: 1600000, desc: "جهاز نظيف بنسبة 99% مع كامل ملحقاته الأصلية والعلبة، بطارية 94%، غير مفكوك نهائياً.", ts: Date.now() - 100000, imgs: [], comments: [] },
+    { id: "demo4", author: "الطيب الوسيلة", cat: "🐏 مواشي وحيوانات", title: "خراف بلدي حمري تربية ممتازة للبيع", city: "ود مدني", phone: "0944444444", wa: "0944444444", price: 350000, desc: "مجموعة خراف حمري وزن ثقيل، صحة ممتازة وخالية من الأمراض، جاهزة للمناسبات والأضاحي.", ts: Date.now() - 200000, imgs: [], comments: [] },
+    { id: "demo5", author: "سليمان حسن", cat: "🛋️ أثاث ومنزليات", title: "طقم جلوس فاخر 7 مقاعد بحالة جديدة", city: "عطبرة", phone: "0955555555", wa: "0955555555", price: 1200000, desc: "طقم جلوس دمياطي خشب زان متين جداً، استخدام حشمة شهور قليلة، مريح وراقي.", ts: Date.now() - 400000, imgs: [], comments: [] },
+    { id: "demo6", author: "إبراهيم خالد", cat: "💼 وظائف وأعمال", title: "مطلوب محاسب خبرة لشركة مواد غذائية", city: "كسلا", phone: "0966666666", wa: "0966666666", price: 400000, desc: "مطلوب محاسب مالي بخبرة لا تقل عن سنتين، يفضل إجادة البرامج المحاسبية (أونلاين أو حضورياً)، راتب مجزي وحوافز.", ts: Date.now() - 600000, imgs: [], comments: [] },
+    { id: "demo7", author: "الضو عمر", cat: "🚗 السيارات", title: "هيونداي كليك 2008 ترخيص خالي عيوب", city: "الأبيض", phone: "0977777777", wa: "0977777777", price: 8500000, desc: "كليك متقنة قير اتوماتيك، مكنة فل، تكييف تلاجة، طقم لساتك جديد، جاهزة للمعاينة.", ts: Date.now() - 800000, imgs: [], comments: [] }
+];
+
+window.ads = [];
+window.feeReports = [];
+window.currentCat = "الكل";
+window.openAdId   = null;
+window.uploadedImgs = [];
+window.screenshotImg = "";
+window.authTab    = 'login';
+const ADMIN_PIN = "2026";
+
+window.localUsers = JSON.parse(localStorage.getItem('hh_users') || '{}');
+window.currentUser = JSON.parse(localStorage.getItem('hh_me') || 'null');
+
+window.addEventListener('DOMContentLoaded', () => {
+    initRealtimeData();
+    window.renderUserArea();
+});
+
+function initRealtimeData() {
+    if (useCloud) {
+        // الاتصال السحابي
+        const qAds = query(collection(db, "ads"), orderBy("ts", "desc"));
+        onSnapshot(qAds, async (snapshot) => {
+            window.ads = [];
+            snapshot.forEach((doc) => { window.ads.push({ id: doc.id, ...doc.data() }); });
+            if (window.ads.length === 0) {
+                for (const item of demoData) { await addDoc(collection(db, "ads"), item); }
+            }
+            window.filterAds();
+            window.updateStats();
+        });
+
+        onSnapshot(collection(db, "reports"), (snapshot) => {
+            window.feeReports = [];
+            snapshot.forEach((doc) => { window.feeReports.push({ id: doc.id, ...doc.data() }); });
+            if(document.getElementById('pg-admin').classList.contains('active')) window.renderAdmin();
+        });
+    } else {
+        // نظام التخطي المحلي المستقر في حال عدم تهيئة فايربيس بعد
+        let localAds = JSON.parse(localStorage.getItem('local_ads') || '[]');
+        if (localAds.length === 0) {
+            localAds = demoData;
+            localStorage.setItem('local_ads', JSON.stringify(localAds));
+        }
+        window.ads = localAds;
+        window.feeReports = JSON.parse(localStorage.getItem('local_reports') || '[]');
+        window.filterAds();
+        window.updateStats();
+    }
+}
+
+window.filterAds = function() {
+    const q   = document.getElementById('q-input').value.toLowerCase();
+    const city= document.getElementById('q-city').value;
+    const res = window.ads.filter(ad => {
+        const okCat  = window.currentCat === 'الكل' || ad.cat === window.currentCat;
+        const okCity = !city || ad.city === city;
+        const okQ    = !q || ad.title.toLowerCase().includes(q) || ad.desc.toLowerCase().includes(q);
+        return okCat && okCity && okQ;
+    });
+    window.renderAds(res);
+    document.getElementById('section-label').textContent = window.currentCat === 'الكل' ? 'أحدث الإعلانات' : window.currentCat;
+}
+
+window.renderAds = function(list) {
+    const grid = document.getElementById('ads-grid');
+    document.getElementById('ads-count-label').textContent = list.length + ' إعلان';
+
+    if (!list.length) {
+        grid.innerHTML = `<div class="empty-state"><i class="fa fa-box-open"></i><p>لا توجد إعلانات تطابق البحث.</p></div>`;
+        return;
+    }
+    grid.innerHTML = list.map((ad) => {
+        const imgBg = ad.imgs?.length ? `background-image:url('${ad.imgs[0]}')` : '';
+        const imgIcon = ad.imgs?.length ? '' : `<i class="fa fa-box" style="font-size:48px"></i>`;
+        const isNew = (Date.now() - ad.ts) < 3600000;
+        return `
+        <div class="ad-card" onclick="window.openAd('${ad.id}')">
+            ${isNew ? '<div class="ad-badge">جديد</div>' : ''}
+            <div class="ad-thumb" style="${imgBg}">${imgIcon}</div>
+            <div class="ad-body">
+                <div class="ad-category">${ad.cat}</div>
+                <div class="ad-title">${ad.title}</div>
+                <div class="ad-price">${Number(ad.price).toLocaleString()} ج.س</div>
+                <div class="ad-foot">
+                    <span class="ad-foot-loc"><i class="fa fa-location-dot"></i> ${ad.city}</span>
+                    <span>${window.timeAgo(ad.ts)}</span>
+                </div>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+window.selectCat = function(el, cat) {
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    window.currentCat = cat;
+    window.filterAds();
+}
+
+window.updateStats = function() {
+    let totalCmts = 0;
+    window.ads.forEach(a => { if (a.comments) totalCmts += a.comments.length; });
+    document.getElementById('s-ads').textContent = window.ads.length;
+    document.getElementById('s-comments').textContent = totalCmts;
+}
+
+window.openAd = function(id) {
+    const ad = window.ads.find(a => a.id === id);
+    if (!ad) return;
+    window.openAdId = id;
+
+    document.getElementById('det-cat').textContent    = ad.cat;
+    document.getElementById('det-title').textContent  = ad.title;
+    document.getElementById('det-price').textContent  = Number(ad.price).toLocaleString() + ' ج.س';
+    document.getElementById('det-author').textContent = ad.author;
+    document.getElementById('det-avatar').textContent = ad.author.charAt(0);
+    document.getElementById('det-desc').textContent   = ad.desc;
+    document.getElementById('det-meta').innerHTML = `
+        <span>📍 <b>${ad.city}</b></span>
+        <span>🕐 <b>${window.timeAgo(ad.ts)}</b></span>
+        <span>🆔 رقم: <b>#${String(ad.id).slice(-4)}</b></span>
+    `;
+
+    const gallery = document.getElementById('det-gallery');
+    const thumbs  = document.getElementById('det-thumbs');
+    thumbs.innerHTML = '';
+    if (ad.imgs?.length) {
+        gallery.style.backgroundImage = `url('${ad.imgs[0]}')`;
+        gallery.innerHTML = '';
+        ad.imgs.forEach((src, i) => {
+            const img = document.createElement('img');
+            img.src = src;
+            if (i === 0) img.classList.add('active');
+            img.onclick = () => {
+                document.querySelectorAll('#det-thumbs img').forEach(t => t.classList.remove('active'));
+                img.classList.add('active');
+                gallery.style.backgroundImage = `url('${src}')`;
+            };
+            thumbs.appendChild(img);
+        });
+    } else {
+        gallery.style.backgroundImage = 'none';
+        gallery.innerHTML = '<i class="fa fa-camera"></i>';
+    }
+
+    let wa = ad.wa.replace(/\D/g,'');
+    if (wa.startsWith('0')) wa = '249' + wa.slice(1);
+    const msg = encodeURIComponent(`السلام عليكم، رأيت إعلانك: (${ad.title}) على منصة الدللالي.`);
+    document.getElementById('btn-wa').onclick   = () => window.open(`https://wa.me/${wa}?text=${msg}`, '_blank');
+    document.getElementById('btn-call').onclick = () => { window.location.href = `tel:${ad.phone}`; };
+
+    window.renderComments(ad.comments ? ad.comments : []);
+    window.showPage('pg-details');
+}
+
+window.renderComments = function(list) {
+    list = list.sort((a,b) => b.id - a.id);
+    document.getElementById('cmts-count').textContent = `(${list.length} رد)`;
+    const container = document.getElementById('cmts-list');
+    if (!list.length) {
+        container.innerHTML = '<div class="no-comments">لا توجد ردود بعد — كن أول من يسوم!</div>';
+        return;
+    }
+    container.innerHTML = list.map(c => `
+        <div class="comment-item">
+            <div class="comment-head">
+                <span class="comment-user"><i class="fa fa-user-circle"></i> ${c.author}</span>
+                <span class="comment-date">${window.timeAgo(c.id)}</span>
+            </div>
+            <div class="comment-text">${c.text}</div>
+        </div>
+    `).join('');
+}
+
+window.submitComment = async function(event) {
+    event.preventDefault();
+    const author = document.getElementById('cmt-name').value.trim();
+    const text   = document.getElementById('cmt-text').value.trim();
+    if (!author || !text) return;
+
+    const cmt = { id: Date.now(), author, text };
+    const adIndex = window.ads.findIndex(a => a.id === window.openAdId);
+    
+    if (adIndex !== -1) {
+        const currentComments = window.ads[adIndex].comments || [];
+        currentComments.push(cmt);
+        window.ads[adIndex].comments = currentComments;
+
+        if (useCloud) {
+            await updateDoc(doc(db, "ads", window.openAdId), { comments: currentComments });
+        } else {
+            localStorage.setItem('local_ads', JSON.stringify(window.ads));
+            window.filterAds();
+        }
+        window.renderComments(currentComments);
+    }
+    document.getElementById('cmt-name').value = '';
+    document.getElementById('cmt-text').value = '';
+    window.showToast('تم إرسال ردك بنجاح ✅', 'success');
+}
+
+window.previewImgs = function(event) {
+    const files = event.target.files;
+    for (const file of files) {
+        if (window.uploadedImgs.length >= 5) { window.showToast('الحد الأقصى 5 صور فقط', 'error'); break; }
+        const reader = new FileReader();
+        reader.onload = ev => {
+            window.uploadedImgs.push(ev.target.result);
+            window.renderPreviews();
+        };
+        reader.readAsDataURL(file);
+    }
+    event.target.value = '';
+}
+
+window.renderPreviews = function() {
+    document.getElementById('n-previews').innerHTML = window.uploadedImgs.map((src, i) => `
+        <div class="preview-item">
+            <img src="${src}">
+            <button type="button" class="preview-del" onclick="window.removeImg(${i})">✕</button>
+        </div>
+    `).join('');
+}
+
+window.removeImg = function(i) { window.uploadedImgs.splice(i, 1); window.renderPreviews(); }
+
+window.publishAd = async function(event) {
+    event.preventDefault();
+    
+    if(!document.getElementById('n-agree-fee').checked) {
+        window.showToast('يرجى تأكيد وقسم الموافقة على اتفاقية الرسوم أولاً ⚠️', 'error');
+        return;
+    }
+
+    const newAd = {
+        ts: Date.now(),
+        author: document.getElementById('n-author').value,
+        cat:    document.getElementById('n-cat').value,
+        title:  document.getElementById('n-title').value,
+        city:   document.getElementById('n-city').value,
+        phone:  document.getElementById('n-phone').value,
+        wa:     document.getElementById('n-wa').value,
+        price:  Number(document.getElementById('n-price').value),
+        desc:   document.getElementById('n-desc').value,
+        imgs:   [...window.uploadedImgs],
+        comments: []
+    };
+
+    if (useCloud) {
+        await addDoc(collection(db, "ads"), newAd);
+    } else {
+        newAd.id = "local_" + Date.now();
+        window.ads.unshift(newAd);
+        localStorage.setItem('local_ads', JSON.stringify(window.ads));
+        window.filterAds();
+        window.updateStats();
+    }
+
+    window.showToast('🎉 تم نشر إعلانك بنجاح ومتاح للجميع!', 'success');
+    event.target.reset();
+    window.uploadedImgs = [];
+    document.getElementById('n-previews').innerHTML = '';
+    window.goHome();
+}
+
+window.previewScreenshot = function(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = ev => {
+            window.screenshotImg = ev.target.result;
+            document.getElementById('r-preview-box').innerHTML = `
+                <div class="preview-item" style="width:140px; height:140px;">
+                    <img src="${window.screenshotImg}">
+                </div>
+            `;
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+window.submitFeeReport = async function(event) {
+    event.preventDefault();
+    if(!window.screenshotImg) {
+        window.showToast('يرجى إرفاق صورة إشعار التحويل ⚠️', 'error');
+        return;
+    }
+
+    const report = {
+        ts: Date.now(),
+        name: document.getElementById('r-name').value,
+        phone: document.getElementById('r-phone').value,
+        adInfo: document.getElementById('r-ad').value,
+        amount: document.getElementById('r-amount').value,
+        img: window.screenshotImg
+    };
+
+    if (useCloud) {
+        await addDoc(collection(db, "reports"), report);
+    } else {
+        report.id = "rep_" + Date.now();
+        window.feeReports.push(report);
+        localStorage.setItem('local_reports', JSON.stringify(window.feeReports));
+    }
+
+    window.showToast('✅ تم إرسال الإشعار للإدارة بنجاح، جاري المراجعة وإبراء ذمتكم.', 'success');
+    event.target.reset();
+    window.screenshotImg = "";
+    document.getElementById('r-preview-box').innerHTML = "";
+    window.goHome();
+}
+
+window.handleAuth = function() {
+    const user = document.getElementById('m-user').value.trim();
+    const pass = document.getElementById('m-pass').value;
+    if (!user || !pass) { window.showToast('أدخل اسم المستخدم وكلمة المرور', 'error'); return; }
+
+    if (window.authTab === 'reg') {
+        const name = document.getElementById('m-name').value.trim() || user;
+        window.localUsers[user] = { name, pass };
+        localStorage.setItem('hh_users', JSON.stringify(window.localUsers));
+        window.currentUser = { user, name };
+    } else {
+        const u = window.localUsers[user];
+        if (!u || u.pass !== pass) { window.showToast('المعلومات خاطئة', 'error'); return; }
+        window.currentUser = { user, name: u.name };
+    }
+
+    localStorage.setItem('hh_me', JSON.stringify(window.currentUser));
+    window.renderUserArea();
+    window.closeModal();
+    window.showToast(`أهلاً ${window.currentUser.name}! 👋`, 'success');
+}
+
+window.logout = function() {
+    window.currentUser = null;
+    localStorage.removeItem('hh_me');
+    window.renderUserArea();
+}
+
+window.renderUserArea = function() {
+    const area = document.getElementById('user-area');
+    if (window.currentUser) {
+        area.innerHTML = `<div class="user-chip" onclick="window.logout()"><i class="fa fa-user"></i> ${window.currentUser.name}</div>`;
+    } else {
+        area.innerHTML = `<button class="btn-auth" onclick="window.openModal()"><i class="fa fa-user"></i> دخول / تسجيل</button>`;
+    }
+}
+
+window.enterAdmin = function() {
+    const pin = prompt('🔐 أدخل رمز المشرفين:');
+    if (pin === ADMIN_PIN) { window.renderAdmin(); window.showPage('pg-admin'); }
+    else window.showToast('رمز خاطئ!', 'error');
+}
+
+window.renderAdmin = function() {
+    let totalCmts = 0;
+    window.ads.forEach(a => { if (a.comments) totalCmts += a.comments.length; });
+    document.getElementById('a-ads').textContent  = window.ads.length;
+    document.getElementById('a-cmts').textContent = totalCmts;
+    document.getElementById('a-reports').textContent = window.feeReports.length;
+
+    document.getElementById('a-ads-body').innerHTML = window.ads.map(ad => `
+        <tr>
+            <td><b>#${String(ad.id).slice(-4)}</b></td>
+            <td>${ad.title.slice(0,35)}…</td>
+            <td>${ad.cat}</td>
+            <td>${ad.city}</td>
+            <td>${Number(ad.price).toLocaleString()}</td>
+            <td><button class="btn-del" onclick="window.delAd('${ad.id}')">حذف</button></td>
+        </tr>
+    `).join('');
+
+    const rBody = document.getElementById('a-reports-body');
+    if(!window.feeReports.length) {
+        rBody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:var(--text-muted);">لا توجد إشعارات سداد معلقة حالياً.</td></tr>`;
+    } else {
+        rBody.innerHTML = window.feeReports.map((rep) => `
+            <tr>
+                <td><b>${rep.name}</b></td>
+                <td>${rep.phone}</td>
+                <td>${rep.adInfo}</td>
+                <td style="color:var(--green); font-weight:700;">${Number(rep.amount).toLocaleString()} ج.س</td>
+                <td><a href="${rep.img}" target="_blank" style="color:var(--blue); font-weight:700;">👁️ عرض الإشعار</a></td>
+                <td>
+                    <button class="btn-approve" onclick="window.approveReport('${rep.id}')">✅ اعتماد</button>
+                    <button class="btn-del" onclick="window.rejectReport('${rep.id}')">✕ رفض</button>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    const cList = document.getElementById('a-cmts-list');
+    let html = '';
+    window.ads.forEach(ad => {
+        if (!ad.comments) return;
+        ad.comments.forEach(c => {
+            html += `
+            <div class="admin-comment-row">
+                <div><small>في: ${ad.title.slice(0,30)}</small><p><b>${c.author}:</b> ${c.text}</p></div>
+                <button class="btn-del" onclick="window.delComment('${ad.id}', ${c.id})">حذف</button>
+            </div>`;
+        });
+    });
+    cList.innerHTML = html || '<div class="no-comments">لا توجد تعليقات.</div>';
+}
+
+window.approveReport = async function(id) {
+    window.showToast('تم اعتماد إشعار السداد وإبراء ذمة المعلن بنجاح 💎', 'success');
+    if (useCloud) {
+        await deleteDoc(doc(db, "reports", id));
+    } else {
+        window.feeReports = window.feeReports.filter(r => r.id !== id);
+        localStorage.setItem('local_reports', JSON.stringify(window.feeReports));
+        window.renderAdmin();
+    }
+}
+
+window.rejectReport = async function(id) {
+    if(confirm('هل تريد رفض هذا الإشعار لعدم صحة التحويل؟')) {
+        if (useCloud) {
+            await deleteDoc(doc(db, "reports", id));
+        } else {
+            window.feeReports = window.feeReports.filter(r => r.id !== id);
+            localStorage.setItem('local_reports', JSON.stringify(window.feeReports));
+            window.renderAdmin();
+        }
+        window.showToast('تم رفض الإشعار', '');
+    }
+}
+
+window.delAd = async function(id) {
+    if (!confirm('حذف نهائي من السيرفر؟')) return;
+    if (useCloud) {
+        await deleteDoc(doc(db, "ads", id));
+    } else {
+        window.ads = window.ads.filter(a => a.id !== id);
+        localStorage.setItem('local_ads', JSON.stringify(window.ads));
+        window.filterAds();
+        window.updateStats();
+        window.renderAdmin();
+    }
+    window.showToast('تم حذف الإعلان بنجاح', 'success');
+}
+
+window.delComment = async function(adId, cmtId) {
+    const adIndex = window.ads.findIndex(a => a.id === adId);
+    if (adIndex !== -1) {
+        const filtered = window.ads[adIndex].comments.filter(c => c.id !== cmtId);
+        window.ads[adIndex].comments = filtered;
+
+        if (useCloud) {
+            await updateDoc(doc(db, "ads", adId), { comments: filtered });
+        } else {
+            localStorage.setItem('local_ads', JSON.stringify(window.ads));
+            window.renderAdmin();
+        }
+        window.showToast('تم حذف التعليق', 'success');
+    }
+}
+</script>
+
+<script>
+function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    const isHome = id === 'pg-home';
+    document.getElementById('hdr-search').style.display = isHome ? 'flex' : 'none';
+    document.getElementById('cats-nav').style.display   = isHome ? 'block' : 'none';
+    document.getElementById('btn-add').style.display    = isHome ? 'flex' : 'none';
+    document.getElementById('btn-back').classList.toggle('show', !isHome);
+    window.scrollTo(0, 0);
+}
+
+function goHome() { showPage('pg-home'); }
+function goAdd()  { showPage('pg-add'); }
+function goFeeReport() { showPage('pg-fee-report'); }
+
+function openModal() { document.getElementById('auth-modal').classList.add('open'); }
+function closeModal() { document.getElementById('auth-modal').classList.remove('open'); }
+
+function switchTab(tab) {
+    window.authTab = tab;
+    document.getElementById('tab-login').classList.toggle('active', tab === 'login');
+    document.getElementById('tab-reg').classList.toggle('active', tab === 'reg');
+    document.getElementById('m-name').style.display = tab === 'reg' ? 'block' : 'none';
+    document.getElementById('m-submit').textContent = tab === 'reg' ? 'إنشاء حساب' : 'دخول';
+}
+
+function timeAgo(ts) {
+    const m = Math.floor((Date.now() - ts) / 60000);
+    if (m < 1)  return 'الآن';
+    if (m < 60) return `منذ ${m} د`;
+    const h = Math.floor(m / 60);
+    if (h < 24) return `منذ ${h} س`;
+    return `منذ ${Math.floor(h/24)} يوم`;
+}
+
+function showToast(msg, type='') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = 'toast ' + type + ' show';
+    setTimeout(() => { t.classList.remove('show'); }, 3000);
+}
+</script>
+</body>
+</html>
